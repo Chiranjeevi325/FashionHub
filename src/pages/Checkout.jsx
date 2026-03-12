@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import orderService from '../services/orderService';
+import authService from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import { MapPin, CreditCard, CheckCircle } from 'lucide-react';
 import './Checkout.css';
@@ -8,6 +10,7 @@ import './Checkout.css';
 const Checkout = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { user } = useAuth();
     const { items = [], total = 0, fromCart = false, buyNow = false } = location.state || {};
     const [placing, setPlacing] = useState(false);
     const [orderPlaced, setOrderPlaced] = useState(false);
@@ -15,6 +18,22 @@ const Checkout = () => {
     const [address, setAddress] = useState({
         street: '', city: '', state: '', zip: '', country: 'India',
     });
+
+    useEffect(() => {
+        if (user) {
+            authService.getProfile().then(data => {
+                if (data.address) {
+                    setAddress({
+                        street: data.address.street || '',
+                        city: data.address.city || '',
+                        state: data.address.state || '',
+                        zip: data.address.zip || '',
+                        country: data.address.country || 'India',
+                    });
+                }
+            }).catch(err => console.error("Failed to fetch profile for checkout address pre-fill"));
+        }
+    }, [user]);
 
     if (!items.length && !orderPlaced) {
         return (

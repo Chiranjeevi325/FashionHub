@@ -26,8 +26,7 @@ const Navbar = () => {
             <div className="top-tier">
                 <div className="container top-tier-content">
                     <div className="left-utils">
-                        <Link to="/help">Customer Care</Link>
-                        <Link to="/visit">MarketNest Luxe</Link>
+                        {/* Removed Customer Care and MarketNest Luxe */}
                     </div>
                     <div className="right-utils">
                         {user ? (
@@ -52,6 +51,7 @@ const Navbar = () => {
                     </Link>
 
                     <div className="main-nav-links">
+                        <NavLink to="/" end>HOME</NavLink>
                         <NavLink to="/men">MEN</NavLink>
                         <NavLink to="/women">WOMEN</NavLink>
                         <NavLink to="/kids">KIDS</NavLink>
@@ -81,7 +81,6 @@ const Navbar = () => {
                                 <User size={24} />
                             </Link>
                         )}
-                        <Link to="/wishlist" className="icon-link"><Heart size={24} /></Link>
                         <Link to="/cart" className="icon-link cart-icon">
                             <ShoppingBag size={24} />
                             {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}

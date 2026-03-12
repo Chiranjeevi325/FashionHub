@@ -55,22 +55,54 @@ const Marketplace = ({ defaultCategory = 'All' }) => {
             {/* Marketplace Category Spotlight */}
             <section className="category-spotlight" style={{ marginBottom: '4rem', textAlign: 'center' }}>
                 <h3 style={{ textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '2rem', fontWeight: 800 }}>Shop By Category</h3>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap' }}>
                     {['Men', 'Women', 'Kids'].map(cat => (
-                        <div key={cat} style={{ cursor: 'pointer' }}>
-                            <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#eee', marginBottom: '1rem', overflow: 'hidden' }}>
-                                <img src={`https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=200`} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <div 
+                            key={cat} 
+                            className={`category-item-circle ${filters.category === cat ? 'active' : ''}`}
+                            onClick={() => setFilters(prev => ({ ...prev, category: cat, page: 1 }))}
+                        >
+                            <div className="circle-img-wrapper">
+                                <img 
+                                    src={cat === 'Men' ? 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&q=80&w=200' : 
+                                         cat === 'Women' ? 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=200' : 
+                                         'https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?auto=format&fit=crop&q=80&w=200'} 
+                                    alt={cat} 
+                                />
                             </div>
-                            <span style={{ fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase' }}>{cat}</span>
+                            <span className="category-label">{cat}</span>
                         </div>
                     ))}
+                    <div 
+                        className={`category-item-circle ${filters.category === 'All' ? 'active' : ''}`}
+                        onClick={() => setFilters(prev => ({ ...prev, category: 'All', page: 1 }))}
+                    >
+                        <div className="circle-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=200" alt="All" />
+                        </div>
+                        <span className="category-label">All</span>
+                    </div>
                 </div>
             </section>
 
             <header id="products-listing" className="market-marketplace-header">
-                <h2>{filters.category === 'All' ? 'ALL PRODUCTS' : filters.category.toUpperCase()}</h2>
-                <div className="results-info">
-                    {pagination.total} Items Found
+                <div className="header-left">
+                    <h2>{filters.category === 'All' ? 'ALL PRODUCTS' : filters.category.toUpperCase()}</h2>
+                    <div className="results-info">
+                        {pagination.total} Items Found
+                    </div>
+                </div>
+                
+                <div className="header-right">
+                    <select 
+                        className="sort-select"
+                        value={filters.sort || ''}
+                        onChange={(e) => setFilters(prev => ({ ...prev, sort: e.target.value, page: 1 }))}
+                    >
+                        <option value="">Sort By: Newest</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                    </select>
                 </div>
             </header>
 

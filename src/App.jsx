@@ -19,6 +19,8 @@ import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 
+import Products from './pages/Brand/Products';
+
 // Layout Wrapper for Brand Dashboard
 const DashboardLayout = ({ children }) => {
   return (
@@ -114,7 +116,7 @@ const App = () => {
                 <DashboardLayout>
                   <Routes>
                     <Route index element={<Dashboard />} />
-                    <Route path="products" element={<div>Products List (Coming Soon)</div>} />
+                    <Route path="products" element={<Products />} />
                     <Route path="products/create" element={<AddProduct />} />
                     <Route path="profile" element={<Profile />} />
                   </Routes>

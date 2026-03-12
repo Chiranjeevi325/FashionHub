@@ -36,37 +36,39 @@ const ProductTable = ({ limit }) => {
     if (loading) return <div>Loading products...</div>;
 
     return (
-        <table className="products-table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {products.map(product => (
-                    <tr key={product.id}>
-                        <td>
-                            <div className="product-cell">
-                                <img src={product.images?.[0] || 'https://via.placeholder.com/50'} alt="" />
-                                <span>{product.name}</span>
-                            </div>
-                        </td>
-                        <td>₹{product.price}</td>
-                        <td><span className={`badge ${product.status}`}>{product.status}</span></td>
-                        <td className="actions">
-                            <button className="icon-btn edit"><Edit2 size={16} /></button>
-                            <button className="icon-btn delete" onClick={() => handleDelete(product.id)}><Trash2 size={16} /></button>
-                        </td>
+        <div className="table-responsive">
+            <table className="products-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                ))}
-                {products.length === 0 && (
-                    <tr><td colSpan="4" className="text-center">No products found.</td></tr>
-                )}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {products.map(product => (
+                        <tr key={product._id}>
+                            <td>
+                                <div className="product-cell">
+                                    <img src={product.images?.[0] || 'https://via.placeholder.com/40'} alt="" />
+                                    <span>{product.name}</span>
+                                </div>
+                            </td>
+                            <td>₹{product.price}</td>
+                            <td><span className={`badge ${product.status}`}>{product.status}</span></td>
+                            <td className="actions">
+                                <button className="icon-btn edit"><Edit2 size={16} /></button>
+                                <button className="icon-btn delete" onClick={() => handleDelete(product._id)}><Trash2 size={16} title="Delete" /></button>
+                            </td>
+                        </tr>
+                    ))}
+                    {products.length === 0 && (
+                        <tr><td colSpan="4" className="text-center">No products found.</td></tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

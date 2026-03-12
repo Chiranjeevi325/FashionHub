@@ -9,7 +9,9 @@ const getProducts = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 12;
     const category = req.query.category;
     const search = req.query.search;
-    const sort = req.query.sort || '-createdAt';
+    let sort = req.query.sort || '-createdAt';
+    if (sort === 'price_asc') sort = 'price';
+    if (sort === 'price_desc') sort = '-price';
 
     let query = { status: 'published', isDeleted: false };
 
