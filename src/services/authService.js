@@ -19,6 +19,16 @@ const authService = {
     refreshToken: async () => {
         const response = await axiosInstance.post('/auth/refresh');
         return response.data;
+    },
+
+    getProfile: async () => {
+        const response = await axiosInstance.get('/auth/profile');
+        return response.data;
+    },
+
+    updateProfile: async (data) => {
+        const response = await axiosInstance.put('/auth/profile', data);
+        return response.data;
     }
 };
 

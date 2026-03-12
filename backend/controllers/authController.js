@@ -128,4 +128,60 @@ const refresh = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { signup, login, logout, refresh };
+// @desc    Get user profile
+// @route   GET /api/auth/profile
+// @access  Private
+const getProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+    res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone || '',
+        address: user.address || {},
+        avatar: user.avatar || '',
+    });
+});
+
+// @desc    Update user profile
+// @route   PUT /api/auth/profile
+// @access  Private
+const updateProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+
+    user.name = req.body.name || user.name;
+    user.phone = req.body.phone !== undefined ? req.body.phone : user.phone;
+    user.avatar = req.body.avatar !== undefined ? req.body.avatar : user.avatar;
+
+    if (req.body.address) {
+        user.address = { ...user.address?.toObject?.() || {}, ...req.body.address };
+    }
+
+    // Allow password change
+    if (req.body.password) {
+        user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        phone: updatedUser.phone || '',
+        address: updatedUser.address || {},
+        avatar: updatedUser.avatar || '',
+    });
+});
+
+module.exports = { signup, login, logout, refresh, getProfile, updateProfile };

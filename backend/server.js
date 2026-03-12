@@ -22,6 +22,8 @@ app.use(cookieParser());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/brand', require('./routes/brandRoutes'));
 app.use('/api/customer', require('./routes/customerRoutes'));
+app.use('/api/cart', require('./routes/cartRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
 
 // 404 & Error Handling Middleware
 app.use(require('./middleware/errorMiddleware').notFound);

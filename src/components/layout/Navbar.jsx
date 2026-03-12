@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import { ShoppingBag, Search, Heart, User, LogOut } from 'lucide-react';
 import './Layout.css';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
+    const { itemCount } = useCart();
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
@@ -30,7 +32,9 @@ const Navbar = () => {
                     <div className="right-utils">
                         {user ? (
                             <>
-                                <span>Welcome, {user.name}</span>
+                                <Link to="/profile" className="profile-link-top">
+                                    <User size={14} /> {user.name}
+                                </Link>
                                 <button onClick={logout} className="logout-link">Sign Out</button>
                             </>
                         ) : (
@@ -72,10 +76,15 @@ const Navbar = () => {
                     </div>
 
                     <div className="action-links">
+                        {user && (
+                            <Link to="/profile" className="icon-link" title="Profile">
+                                <User size={24} />
+                            </Link>
+                        )}
                         <Link to="/wishlist" className="icon-link"><Heart size={24} /></Link>
                         <Link to="/cart" className="icon-link cart-icon">
                             <ShoppingBag size={24} />
-                            <span className="cart-badge">0</span>
+                            {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
                         </Link>
                     </div>
                 </div>

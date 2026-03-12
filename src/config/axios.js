@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_BASE_URL } from '../utils/constants';
+import { API_BASE_URL, STORAGE_KEYS } from '../utils/constants';
 
 const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
@@ -12,9 +12,13 @@ const axiosInstance = axios.create({
 // Request interceptor for adding auth token
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('marketnest_token'); // Or memory-based as planned
+        const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+        }
+        // Don't override Content-Type for FormData
+        if (config.data instanceof FormData) {
+            delete config.headers['Content-Type'];
         }
         return config;
     },
@@ -29,18 +33,20 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        // If error is 401 and not already retried
+        // If error is 401 and not already retried, try refreshing token
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
-                // Mock refresh token logic or real endpoint
-                // const { data } = await axios.post(`${API_BASE_URL}/auth/refresh`);
-                // localStorage.setItem('marketnest_token', data.accessToken);
-                // return axiosInstance(originalRequest);
-
-                console.warn('Authentication expired. Please login again.');
+                const { data } = await axios.post(`${API_BASE_URL}/auth/refresh`, {}, { withCredentials: true });
+                localStorage.setItem(STORAGE_KEYS.TOKEN, data.accessToken);
+                originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+                return axiosInstance(originalRequest);
             } catch (refreshError) {
+                // Refresh failed — clear auth and redirect to login
+                localStorage.removeItem(STORAGE_KEYS.TOKEN);
+                localStorage.removeItem(STORAGE_KEYS.USER);
+                console.warn('Session expired. Please login again.');
                 return Promise.reject(refreshError);
             }
         }

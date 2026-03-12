@@ -12,7 +12,11 @@ export const useProducts = (filters = {}) => {
             setLoading(true);
             const data = await customerService.getProducts(filters);
             setProducts(data.products || []);
-            setPagination(data.pagination || { total: 0, pages: 0, current: 1 });
+            setPagination({
+                total: data.total || 0,
+                pages: data.pages || 0,
+                current: data.page || 1
+            });
         } catch (err) {
             toast.error('Failed to load products');
             console.error(err);

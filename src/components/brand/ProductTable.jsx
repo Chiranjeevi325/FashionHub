@@ -54,7 +54,7 @@ const ProductTable = ({ limit }) => {
                                 <span>{product.name}</span>
                             </div>
                         </td>
-                        <td>${product.price}</td>
+                        <td>₹{product.price}</td>
                         <td><span className={`badge ${product.status}`}>{product.status}</span></td>
                         <td className="actions">
                             <button className="icon-btn edit"><Edit2 size={16} /></button>

@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
                 <div className="product-category">{product.category}</div>
                 <h3 className="product-name">{product.name}</h3>
                 <p className="product-brand">by {product.brand}</p>
-                <div className="product-price">${product.price}</div>
+                <div className="product-price">₹{product.price}</div>
             </div>
         </div>
     );

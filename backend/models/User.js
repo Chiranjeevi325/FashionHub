@@ -25,6 +25,21 @@ const userSchema = new mongoose.Schema({
         enum: ['brand', 'customer'],
         default: 'customer',
     },
+    phone: {
+        type: String,
+        trim: true,
+    },
+    address: {
+        street: String,
+        city: String,
+        state: String,
+        zip: String,
+        country: { type: String, default: 'India' },
+    },
+    avatar: {
+        type: String,
+        default: '',
+    },
 }, {
     timestamps: true,
 });

@@ -20,11 +20,18 @@ const getDashboardStats = asyncHandler(async (req, res) => {
 // @access  Private/Brand
 const createProduct = asyncHandler(async (req, res) => {
     const { name, description, price, category, status } = req.body;
-    const images = req.files.map(file => file.path); // Cloudinary URLs from multer
+
+    // Support both file uploads (Cloudinary) and image URLs from JSON body
+    let images = [];
+    if (req.files && req.files.length > 0) {
+        images = req.files.map(file => file.path);
+    } else if (req.body.images) {
+        images = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
+    }
 
     if (images.length === 0) {
         res.status(400);
-        throw new Error('Please upload at least one image');
+        throw new Error('Please provide at least one image');
     }
 
     const product = await Product.create({

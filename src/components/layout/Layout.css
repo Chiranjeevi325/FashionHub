@@ -37,6 +37,20 @@
     font-weight: 600;
 }
 
+.profile-link-top {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #333;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.profile-link-top:hover {
+    color: var(--accent);
+}
+
+
 .main-tier {
     background: var(--primary);
     padding: 0.8rem 0;

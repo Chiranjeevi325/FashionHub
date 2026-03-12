@@ -12,8 +12,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
-    if (savedUser) {
+    const savedToken = localStorage.getItem(STORAGE_KEYS.TOKEN);
+    if (savedUser && savedToken) {
       setUser(JSON.parse(savedUser));
+      setAccessToken(savedToken);
     }
     setLoading(false);
   }, []);
@@ -23,12 +25,14 @@ export const AuthProvider = ({ children }) => {
       const data = await authService.login({ email, password });
       setUser(data);
       setAccessToken(data.accessToken);
+      // Persist both user and token
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify({
         _id: data._id,
         name: data.name,
         email: data.email,
         role: data.role
       }));
+      localStorage.setItem(STORAGE_KEYS.TOKEN, data.accessToken);
       toast.success('Successfully logged in!');
       return data;
     } catch (error) {
@@ -59,12 +63,13 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setAccessToken(null);
       localStorage.removeItem(STORAGE_KEYS.USER);
+      localStorage.removeItem(STORAGE_KEYS.TOKEN);
       toast.success('Signed out');
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, loading, login, logout, signup, setAccessToken }}>
+    <AuthContext.Provider value={{ user, setUser, accessToken, loading, login, logout, signup, setAccessToken }}>
       {!loading && children}
     </AuthContext.Provider>
   );

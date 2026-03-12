@@ -2,7 +2,7 @@ import axiosInstance from '../config/axios';
 
 const brandService = {
     getStats: async () => {
-        const response = await axiosInstance.get('/brand/stats');
+        const response = await axiosInstance.get('/brand/dashboard');
         return response.data;
     },
 
@@ -28,6 +28,13 @@ const brandService = {
 
     uploadImages: async (formData) => {
         const response = await axiosInstance.post('/brand/upload', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data;
+    },
+
+    uploadProduct: async (formData) => {
+        const response = await axiosInstance.post('/brand/products', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
         return response.data;

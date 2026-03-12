@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { LayoutDashboard, ShoppingBag, PlusCircle, Settings } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, PlusCircle, Settings, User, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import './Sidebar.css';
 
 const Sidebar = () => {
+    const { logout } = useAuth();
+
     return (
         <aside className="brand-sidebar">
             <div className="sidebar-header">
@@ -23,11 +26,18 @@ const Sidebar = () => {
                     <PlusCircle size={20} />
                     <span>Add Product</span>
                 </NavLink>
-                <NavLink to="/dashboard/settings" title="Settings">
-                    <Settings size={20} />
-                    <span>Settings</span>
+                <NavLink to="/dashboard/profile" title="Profile">
+                    <User size={20} />
+                    <span>Profile</span>
                 </NavLink>
             </nav>
+
+            <div className="sidebar-footer">
+                <button onClick={logout} className="sidebar-logout">
+                    <LogOut size={18} />
+                    <span>Sign Out</span>
+                </button>
+            </div>
         </aside>
     );
 };
