@@ -10,8 +10,18 @@ const app = express();
 
 // Middleware
 app.use(helmet());
+
+// Build allowed origins from CLIENT_URL env var + localhost for dev
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:5174',
+];
+if (process.env.CLIENT_URL) {
+    process.env.CLIENT_URL.split(',').forEach(url => allowedOrigins.push(url.trim()));
+}
+
 app.use(cors({
-    origin: [process.env.CLIENT_URL || 'http://localhost:5173', 'http://localhost:5174'],
+    origin: allowedOrigins,
     credentials: true
 }));
 app.use(express.json());
