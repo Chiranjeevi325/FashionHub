@@ -1,0 +1,94 @@
+.customer-product-card {
+    display: block;
+    background: #FFFFFF;
+    transition: var(--transition);
+    padding: 0.5rem;
+}
+
+.card-image {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #f8f8f8;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.customer-product-card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-info {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.brand-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.5px;
+}
+
+.product-name-market {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.current-price {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.original-price {
+    font-size: 0.75rem;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.discount-tag {
+    font-size: 0.75rem;
+    color: var(--accent);
+    /* Highlight Orange */
+    font-weight: 700;
+}
+
+/* Marketplace Grid */
+.products-grid-market {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+@media (max-width: 1200px) {
+    .products-grid-market {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid-market {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}

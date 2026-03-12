@@ -1,0 +1,136 @@
+:root {
+  --primary: #2c4152;
+  /* Dark Navy Primary */
+  --secondary: #FFFFFF;
+  --accent: #ff6900;
+  /* Discount Orange */
+  --search-bg: #fff9e6;
+  /* Light Yellow Search Bar */
+  --background: #FFFFFF;
+  --surface: #f4f4f4;
+  --text: #333333;
+  --text-muted: #666666;
+  --border: #e2e2e2;
+
+  --font-main: 'Source Sans Pro', 'Inter', sans-serif;
+
+  /* Geometry */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 50px;
+  --radius-banner: 40px;
+
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Market Utilities */
+.btn-pill {
+  padding: 0.8rem 2rem;
+  background: #000;
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-pill:hover {
+  opacity: 0.9;
+}
+
+.btn-outline-pill {
+  padding: 0.8rem 2rem;
+  border: 1px solid #000;
+  background: transparent;
+  color: #000;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.search-pill-market {
+  background: var(--search-bg);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1.5rem;
+  width: 100%;
+}
+
+.search-pill-market input {
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.banner-rounded {
+  border-radius: var(--radius-banner);
+  overflow: hidden;
+}
+
+/* Layout Classes */
+.main-content {
+  padding-top: 110px;
+  /* Accommodate two-tier header */
+  min-height: calc(100vh - 110px);
+}
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  flex: 1;
+  margin-left: 260px;
+  padding: 2rem 4rem;
+  background: #f8f9fa;
+}
+
+@media (max-width: 992px) {
+  .dashboard-main {
+    margin-left: 0;
+    padding: 2rem;
+  }
+}
